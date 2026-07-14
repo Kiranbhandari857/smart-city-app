@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=5">
+</head>
+<body>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-navy shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">🏙️ Smart City Dashboard</a>
+            <div class="ms-auto">
+                <a href="/report" class="btn btn-light btn-sm me-2 fw-bold text-navy">➕ New Report</a>
+                
+                <a href="/logout" class="btn btn-outline-light btn-sm">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 fade-in-up">
+        <div class="row mb-4">
+            <div class="col">
+                <h2 class="fw-bold" style="color: #0a1142;">My Submissions</h2>
+                <p class="text-secondary">Track the real-time status of your reports.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="glass-card p-4 rounded-4 shadow-sm border-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Photo</th> <th>Issue</th>
+            <th>Category</th>
+            <th>Priority</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if (complaints.length > 0) { %>
+            <% complaints.forEach(complaint => { %>
+                <tr>
+                    <td>
+                        <% if (complaint.imageUrl) { %>
+                            <img src="<%= complaint.imageUrl %>" alt="Report Photo" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                        <% } else { %>
+                            <span class="text-muted small">No photo</span>
+                        <% } %>
+                    </td>
+                    <td class="fw-semibold"><%= complaint.title %></td>
+                    <td><%= complaint.category %></td>
+                    <td>
+                        <span class="badge <%= complaint.priority === 'High' ? 'bg-danger' : (complaint.priority === 'Medium' ? 'bg-warning text-dark' : 'bg-primary') %> rounded-pill px-2">
+                            <%= complaint.priority %>
+                        </span>
+                    </td>
+                    <td>
+                        <% if (complaint.status === 'Resolved') { %>
+                            <span class="badge bg-success">✓ Resolved</span>
+                        <% } else { %>
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }) %>
+        <% } else { %>
+            <% } %>
+    </tbody>
+</table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+/* Premium Light/White Animated Background */
+body {
+    background: linear-gradient(-45deg, #ffffff, #f0f4f8, #e2e8f0, #f0f4f8);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Your Pinkish Glass Cards (Kept the same, but softened the shadow for the light theme) */
+/* Premium Modern SaaS Card Design */
+.glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(10, 17, 66, 0.05); /* Very subtle navy border */
+    box-shadow: 0 12px 40px rgba(10, 17, 66, 0.08); /* Soft, professional shadow */
+}
+/* Custom Navy Blue Elements */
+.bg-navy {
+    background-color: #0a1142 !important;
+}
+
+.btn-navy {
+    background-color: #0a1142;
+    border-color: #0a1142;
+    color: white;
+}
+
+.btn-navy:hover {
+    background-color: #05052d;
+    color: white;
+}
+
+/* Custom Animations */
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hover-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.hover-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn-custom {
+    transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+    transform: scale(1.03);
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=4">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-navy shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">🏙️ Smart City Admin Portal</a>
+            <a href="/" class="btn btn-outline-light btn-sm ms-auto">Back to Portal</a>
+        </div>
+    </nav>
+
+    <div class="container mt-5 fade-in-up">
+        <div class="row mb-4">
+            <div class="col">
+                <h2 class="fw-bold" style="color: #0a1142;">Dashboard Overview</h2>
+                <p class="text-secondary">Live infrastructure complaint data.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="glass-card p-4 rounded-4 h-100 shadow-sm border-0">
+                    <h5 class="fw-bold mb-4" style="color: #0a1142;">Issues by Category</h5>
+                    <div style="max-width: 300px; margin: auto;">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8 mb-4">
+                <div class="glass-card p-4 rounded-4 h-100 shadow-sm border-0">
+                    <h5 class="fw-bold mb-4" style="color: #0a1142;">Recent Submissions</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (complaints.length > 0) { %>
+                                    <% complaints.forEach(complaint => { %>
+                                        <tr>
+                                            <td class="fw-semibold"><%= complaint.title %></td>
+                                            <td><%= complaint.category %></td>
+                                            <td>
+                                                <span class="badge <%= complaint.priority === 'High' ? 'bg-danger' : (complaint.priority === 'Medium' ? 'bg-warning text-dark' : 'bg-primary') %> rounded-pill px-2">
+                                                    <%= complaint.priority %>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <% if (complaint.status === 'Resolved') { %>
+                                                    <span class="badge bg-success">✓ Resolved</span>
+                                                <% } else { %>
+                                                    <span class="badge bg-warning text-dark">Pending</span>
+                                                <% } %>
+                                            </td>
+                                            <td>
+                                                <% if (complaint.status !== 'Resolved') { %>
+                                                    <form action="/resolve-complaint/<%= complaint._id %>" method="POST" class="d-inline">
+                                                        <button type="submit" class="btn btn-sm btn-outline-success fw-bold">✓ Resolve</button>
+                                                    </form>
+                                                <% } else { %>
+                                                    <span class="text-muted small">Completed</span>
+                                                <% } %>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-4">No complaints logged yet.</td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script id="complaintData" type="application/json">
+        <%- JSON.stringify(complaints) %>
+    </script>
+    
+    <script>
+        // 1. Safely read the hidden data using pure, error-free JavaScript
+        const rawData = JSON.parse(document.getElementById('complaintData').textContent);
+
+        // 2. Tally up the categories mathematically
+        const counts = { 'Road': 0, 'Water': 0, 'Electricity': 0, 'Garbage': 0 };
+        rawData.forEach(item => {
+            if (counts[item.category] !== undefined) {
+                counts[item.category]++;
+            }
+        });
+
+        // 3. Render the dynamic Chart
+        const ctx = document.getElementById('categoryChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['🚧 Road', '💧 Water', '💡 Electricity', '🗑 Garbage'],
+                datasets: [{
+                    data: [counts['Road'], counts['Water'], counts['Electricity'], counts['Garbage']],
+                    backgroundColor: [
+                        '#ffc107', // Warning Yellow for Roads
+                        '#0dcaf0', // Info Blue for Water
+                        '#dc3545', // Danger Red for Electricity
+                        '#6c757d'  // Secondary Gray for Garbage
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: { position: 'bottom' }
+                },
+                cutout: '65%' // Makes it a thin, modern ring
+            }
+        });
+    </script>
+</body>
+</html>
+</body>
+</html>

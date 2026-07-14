@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Smart City</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body, html { height: 100%; margin: 0; font-family: 'Inter', sans-serif; }
+        .bg-image {
+            background-image: linear-gradient(rgba(11, 19, 43, 0.75), rgba(11, 19, 43, 0.95)), url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover; background-position: center; min-height: 100vh; display: flex; flex-direction: column;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 20px; padding: 3rem; color: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2); width: 100%; max-width: 450px; margin: auto;
+        }
+        .glass-input {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: white; border-radius: 10px;
+        }
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.1); border-color: #f6d365; color: white; box-shadow: 0 0 0 0.25rem rgba(246, 211, 101, 0.25);
+        }
+        .glass-input::placeholder { color: rgba(255, 255, 255, 0.5); }
+        .top-nav { padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    </style>
+</head>
+<body>
+    <div class="bg-image">
+        <div class="top-nav">
+            <a href="/" class="text-white text-decoration-none fw-bold fs-5"><i class="bi bi-buildings me-2"></i>Smart City Hub</a>
+            <a href="/" class="btn btn-outline-light rounded-pill px-4"><i class="bi bi-arrow-left me-2"></i>Back to Portal</a>
+        </div>
+
+        <div class="glass-card border-warning border-opacity-25">
+            <div class="text-center mb-4">
+                <i class="bi bi-shield-lock-fill display-4 text-warning mb-3"></i>
+                <h2 class="fw-bold">Admin Vault</h2>
+                <p class="text-light opacity-75 small">Authorized city personnel only.</p>
+            </div>
+            
+            <form action="/login" method="POST">
+                <div class="mb-3">
+                    <label class="form-label small text-light opacity-75">Admin Username</label>
+                    <input type="text" name="username" class="form-control glass-input py-2" placeholder="admin" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label small text-light opacity-75">Passcode</label>
+                    <input type="password" name="password" class="form-control glass-input py-2" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-warning w-100 py-2 fw-bold shadow-sm rounded-pill mb-3">Secure Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
