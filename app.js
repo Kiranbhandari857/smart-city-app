@@ -22,7 +22,6 @@ const connectDB = require('./config/db');
 const authController = require('./controllers/authController');
 const complaintController = require('./controllers/complaintController');
 const chatController = require('./controllers/chatController');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = 'super-secure-smart-city-api-key';
