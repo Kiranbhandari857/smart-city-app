@@ -1,5 +1,4 @@
 require('dotenv').config();
-const MongoStore = require('connect-mongo');
 const express = require('express');
 const path = require('path');
 const session = require('express-session'); 
@@ -40,9 +39,7 @@ app.use(session({
     secret: process.env.JWT_SECRET || 'super-secure-smart-city-api-key',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: process.env.MONGO_URI // Make sure this matches your actual DB variable!
-    })
+     
 }));
 // ==========================================
 // EXPERT TASK 7: GOOGLE OAUTH LOGIN
