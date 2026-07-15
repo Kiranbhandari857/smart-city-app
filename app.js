@@ -168,5 +168,5 @@ app.get('/api/my-complaints', verifyToken, complaintController.apiGetMyComplaint
 
 // Start Server
 app.listen(PORT, () => {
-    console.log(`🚀 MVC SERVER RUNNING on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
