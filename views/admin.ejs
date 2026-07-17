@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= pageTitle %></title>
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css?v=4">
+    <!-- Premium Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-navy shadow">
         <div class="container">
             <a class="navbar-brand fw-bold" href="/">🏙️ Smart City Admin Portal</a>
@@ -16,6 +19,7 @@
         </div>
     </nav>
 
+    <!-- Main Content Grid -->
     <div class="container mt-5 fade-in-up">
         <div class="row mb-4">
             <div class="col">
@@ -25,8 +29,9 @@
         </div>
 
         <div class="row">
+            <!-- Chart Card (Left Side) -->
             <div class="col-lg-4 mb-4">
-                <div class="glass-card p-4 rounded-4 h-100 shadow-sm border-0">
+                <div class="glass-card hover-card p-4 rounded-4 h-100 shadow-sm border-0">
                     <h5 class="fw-bold mb-4" style="color: #0a1142;">Issues by Category</h5>
                     <div style="max-width: 300px; margin: auto;">
                         <canvas id="categoryChart"></canvas>
@@ -34,8 +39,9 @@
                 </div>
             </div>
 
+            <!-- Table Card (Right Side) -->
             <div class="col-lg-8 mb-4">
-                <div class="glass-card p-4 rounded-4 h-100 shadow-sm border-0">
+                <div class="glass-card hover-card p-4 rounded-4 h-100 shadow-sm border-0">
                     <h5 class="fw-bold mb-4" style="color: #0a1142;">Recent Submissions</h5>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle">
@@ -90,6 +96,7 @@
         </div>
     </div>
 
+    <!-- Scripts to Draw the Chart -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script id="complaintData" type="application/json">
@@ -97,10 +104,8 @@
     </script>
     
     <script>
-        // 1. Safely read the hidden data using pure, error-free JavaScript
         const rawData = JSON.parse(document.getElementById('complaintData').textContent);
 
-        // 2. Tally up the categories mathematically
         const counts = { 'Road': 0, 'Water': 0, 'Electricity': 0, 'Garbage': 0 };
         rawData.forEach(item => {
             if (counts[item.category] !== undefined) {
@@ -108,7 +113,6 @@
             }
         });
 
-        // 3. Render the dynamic Chart
         const ctx = document.getElementById('categoryChart').getContext('2d');
         new Chart(ctx, {
             type: 'doughnut',
@@ -116,25 +120,16 @@
                 labels: ['🚧 Road', '💧 Water', '💡 Electricity', '🗑 Garbage'],
                 datasets: [{
                     data: [counts['Road'], counts['Water'], counts['Electricity'], counts['Garbage']],
-                    backgroundColor: [
-                        '#ffc107', // Warning Yellow for Roads
-                        '#0dcaf0', // Info Blue for Water
-                        '#dc3545', // Danger Red for Electricity
-                        '#6c757d'  // Secondary Gray for Garbage
-                    ],
+                    backgroundColor: ['#ffc107', '#0dcaf0', '#dc3545', '#6c757d'],
                     borderWidth: 0,
                     hoverOffset: 4
                 }]
             },
             options: {
-                plugins: {
-                    legend: { position: 'bottom' }
-                },
-                cutout: '65%' // Makes it a thin, modern ring
+                plugins: { legend: { position: 'bottom' } },
+                cutout: '65%'
             }
         });
     </script>
-</body>
-</html>
 </body>
 </html>
