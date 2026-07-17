@@ -8,7 +8,7 @@ const complaintSchema = new mongoose.Schema({
     description: { type: String, required: true },
     status: { type: String, default: 'Pending' },
     
-    // 👇 NEW LINE: This will store the name of the uploaded photo
+    //  This will store the name of the uploaded photo
     imageUrl: { type: String, default: null }, 
     
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, 
